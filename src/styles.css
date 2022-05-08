@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    margin: 0;
+    background-color: var(--surface-a);
+    font-family: var(--font-family);
+    scroll-behavior: smooth;
+}
+
+.text-b {
+    color: var(--text-color-secondary);
+}

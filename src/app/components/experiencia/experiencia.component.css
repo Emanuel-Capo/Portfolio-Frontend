@@ -1,0 +1,7 @@
+:host ::ng-deep .p-timeline-event-content {
+    flex: 3;
+}
+
+:host ::ng-deep .p-timeline-event-opposite {
+    flex: 1;
+}

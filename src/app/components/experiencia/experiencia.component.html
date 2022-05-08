@@ -1,0 +1,16 @@
+<div class="text-b mr-6 ml-6 z-0" id="experiencia">
+    <h2 class="text-4xl text-center text-900">Experiencia</h2>
+
+
+    <p-timeline [value]="events">
+
+        <ng-template pTemplate="content" let-event>
+            <h3>{{event.exp}}</h3>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam asperiores sint beatae natus, ad earum maxime porro vero blanditiis quasi, ut velit ducimus officia iusto tempora dolorem accusamus aliquid? Placeat!</p>
+        </ng-template>
+        <ng-template pTemplate="opposite" let-event>
+            <small class="p-text-secondary w-3">{{event.inicio}} <br> {{event.fin}}</small>
+        </ng-template>
+    </p-timeline>
+
+</div>
