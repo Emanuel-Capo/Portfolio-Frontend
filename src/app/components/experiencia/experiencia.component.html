@@ -1,16 +1,40 @@
-<div class="text-b mr-6 ml-6 z-0" id="experiencia">
-    <h2 class="text-4xl text-center text-900">Experiencia</h2>
+<div class="container text-b" id="experiencia">
+    <h2 class="text-4xl text-center text-900">Experiencia
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarExp">Agregar</button></h2>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card no-bg">
+                <div class="card-body">
+                    <div id="content">
+                        <ul class="timeline">
+                            <li class="event" *ngFor="let exper of experiencias" attr.data="Desde:{{exper.fecha_inicio|date:'dd/MM/yyyy'}} Hasta:{{exper.fecha_fin|date:'dd/MM/yyyy'}}">
 
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h3>Empresa: {{exper.empresa}}</h3>
+                                        <h3>Trabajo: {{exper.trabajo}}</h3>
+                                    </div>
 
-    <p-timeline [value]="events">
+                                    <div>
+                                        <button class="btn btn-primary mx-2" (click)="experienciaActual(exper)" data-bs-toggle="modal" data-bs-target="#editarExp">Editar</button>
+                                        <button class="btn btn-danger" (click)="eliminarExperiencia(exper.id!)">Eliminar</button>
+                                    </div>
+                                </div>
+                                <p>{{exper.descripcion}}</p>
+                            </li>
 
-        <ng-template pTemplate="content" let-event>
-            <h3>{{event.exp}}</h3>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam asperiores sint beatae natus, ad earum maxime porro vero blanditiis quasi, ut velit ducimus officia iusto tempora dolorem accusamus aliquid? Placeat!</p>
-        </ng-template>
-        <ng-template pTemplate="opposite" let-event>
-            <small class="p-text-secondary w-3">{{event.inicio}} <br> {{event.fin}}</small>
-        </ng-template>
-    </p-timeline>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" id="agregarExp" tabindex="-1" aria-hidden="true">
+    <app-agregar-exp (onExperiencia)="agregarExperiencia($event)"></app-agregar-exp>
+</div>
+
+<div class="modal fade" id="editarExp" tabindex="-1" aria-hidden="true">
+    <app-editar-exp [experiencia]="experActual" (onEditado)="editarExperiencia(experActual.id!, $event)"></app-editar-exp>
 </div>

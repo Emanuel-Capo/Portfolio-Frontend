@@ -1,41 +1,32 @@
 <div class="text-b mr-6 ml-6 z-0" id="proyectos">
-    <h2 class="text-4xl text-center text-900">Proyectos</h2>
-    <div class="grid">
-        <div class="col-12 md:col-4">
-            <p-card header="Páginas Web" styleClass="p-card-shadow">
-                <ng-template pTemplate="header">
-                    <img alt="Card" src="assets/pagina.jpg">
-                </ng-template>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-                <ng-template pTemplate="footer">
-                    <p-button label="Ver páginas" icon="pi pi-check"></p-button>
+    <h2 class="text-4xl text-center text-900">Proyectos <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarProy">Agregar</button></h2>
 
-                </ng-template>
-            </p-card>
-        </div>
-        <div class="col-12 md:col-4">
-            <p-card header="Juegos" styleClass="p-card-shadow">
-                <ng-template pTemplate="header">
-                    <img alt="Card" src="assets/juego.png">
-                </ng-template>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-                <ng-template pTemplate="footer">
-                    <p-button label="Ver juegos" icon="pi pi-check"></p-button>
+    <div class="card mb-3" *ngFor="let proyecto of proyectos">
+        <div class="row g-0">
+            <div class="col-md-3">
+                <img src={{proyecto.img}} class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-9">
+                <div class="card-body">
+                    <h5 class="card-title">{{proyecto.nombre}}
+                        <a href={{proyecto.link}}>
+                            <button class="btn btn-info float-end">Ver <i class="pi pi-check"></i></button></a>
+                        <button class="btn btn-danger mx-2 float-end" (click)="eliminarProyecto(proyecto.id!)">Eliminar</button>
+                        <button class="btn btn-primary mx-1 float-end" (click)="proyectoActual(proyecto)" data-bs-toggle="modal" data-bs-target="#editarProy">Editar</button>
+                    </h5>
+                    <p class="card-text">{{proyecto.descripcion}}</p>
 
-                </ng-template>
-            </p-card>
-        </div>
-        <div class="col-12 md:col-4">
-            <p-card header="Otros" styleClass="p-card-shadow">
-                <ng-template pTemplate="header">
-                    <img alt="Card" src="assets/calcu.jpg">
-                </ng-template>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-                <ng-template pTemplate="footer">
-                    <p-button label="Ver otros" icon="pi pi-check"></p-button>
-
-                </ng-template>
-            </p-card>
+                </div>
+            </div>
         </div>
     </div>
+
+</div>
+
+<div class="modal fade" id="agregarProy" tabindex="-1" aria-hidden="true">
+    <app-agregar-proy (onProyecto)="agregarProyecto($event)"></app-agregar-proy>
+</div>
+
+<div class="modal fade" id="editarProy" tabindex="-1" aria-hidden="true">
+    <app-editar-proy [proyecto]="proyActual" (onEditado)="editarProyecto(proyActual.id!, $event)"></app-editar-proy>
 </div>

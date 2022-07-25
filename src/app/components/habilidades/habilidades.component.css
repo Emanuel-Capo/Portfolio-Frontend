@@ -1,3 +1,15 @@
 :host ::ng-deep .p-knob-text {
     font-size: 1rem;
 }
+
+svg {
+    height: 40px;
+    position: relative;
+    top: -105px;
+    filter: invert(85%) sepia(5%) saturate(0%) hue-rotate(248deg) brightness(80%) contrast(92%);
+}
+
+.arriba {
+    position: relative;
+    top: -40px;
+}
