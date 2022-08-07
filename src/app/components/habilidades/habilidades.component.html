@@ -1,25 +1,55 @@
 <div class="text-b mr-6 ml-6 z-0" id="skills">
-    <h2 class="text-4xl text-center text-900 m-4">Habilidades <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarHab">Agregar</button></h2>
-    <div class="grid text-center">
+    <h2 class="text-4xl text-center text-900 m-4">Habilidades <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#Hab" *ngIf="validado()" (click)="addMode()"><i class="bi bi-file-earmark-plus"></i> Agregar</button></h2>
+    <div class="text-center">
+        <p-progressSpinner *ngIf="!dataOK"></p-progressSpinner>
+    </div>
+    <div class="grid text-center" *ngIf="dataOK">
         <div class="col-6 md:col-3" *ngFor="let habil of habilidades">
             <p-knob ngModel={{habil.porcentaje}} valueTemplate=""></p-knob>
             <h4>{{habil.habilidad}}</h4>
             <svg xmlns="http://www.w3.org/2000/svg" attr.viewBox={{habil.iconVB}}><path attr.d={{habil.iconPath}}/></svg>
             <div class="arriba">
-                <button class="btn btn-primary mx-2" (click)="habilidadActual(habil)" data-bs-toggle="modal" data-bs-target="#editarHab">Editar</button>
-                <button class="btn btn-danger" (click)="eliminarHabilidades(habil.id!)">Eliminar</button>
+                <button class="btn btn-primary mx-2" (click)="habilidadActual(habil)" data-bs-toggle="modal" data-bs-target="#Hab" *ngIf="validado()"><i class="bi bi-pencil"></i> Editar</button>
+                <button class="btn btn-danger" (click)="eliminarHabilidades(habil.id!)" *ngIf="validado()"><i class="bi bi-trash3"></i> Eliminar</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="agregarHab" tabindex="-1" aria-hidden="true">
-    <app-agregar-hab (onHabilidades)="agregarHabilidades($event)"></app-agregar-hab>
+<div class="modal fade" id="Hab" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" *ngIf="!editMode">Agregar Lenguaje</h5>
+                <h5 class="modal-title" id="exampleModalLabel" *ngIf="editMode">Editar Lenguaje</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="miFormulario" (ngSubmit)="guardar()">
+                    <div class="mb-3">
+                        <label class="form-label">Lenguaje</label>
+                        <input type="text" class="form-control" formControlName="habilidad">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Porcentaje</label>
+                        <input type="number" class="form-control" formControlName="porcentaje">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Viewbox del ícono</label>
+                        <input type="text" class="form-control" formControlName="iconVB">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Path del ícono</label>
+                        <input type="text" class="form-control" formControlName="iconPath">
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Hab" *ngIf="!editMode">Agregar</button>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Hab" *ngIf="editMode">Editar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="modal fade" id="editarHab" tabindex="-1" aria-hidden="true">
-    <app-editar-hab [habilidades]="habilActual" (onEditado)="editarHabilidades(habilActual.id!, $event)"></app-editar-hab>
-</div>
 
 
 

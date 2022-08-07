@@ -4,5 +4,6 @@ export interface Experiencia {
     empresa     :string,
     fecha_inicio:string,
     fecha_fin   :string,
-    descripcion :string
+    descripcion :string,
+    img         :string    
 }

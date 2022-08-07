@@ -1,12 +1,17 @@
-<p-menubar [model]="items" class="min-w-full z-5" id="menu">
+<p-menubar [model]="items" class="min-w-full z-5 fixed-top" id="menu">
     <ng-template pTemplate="start">
         <img src="./assets/APLogo-20-20.png" height="70">
     </ng-template>
     <ng-template pTemplate="end">
-        <a href="#"> <i class="pi pi-instagram mr-3" style="font-size: 1.5rem;"></i></a>
-        <a href="#"> <i class="pi pi-facebook mr-3" style="font-size: 1.5rem;"></i></a>
-        <a href="#"> <i class="pi pi-linkedin mr-3" style="font-size: 1.5rem;"></i></a>
-        <a href="#"> <i class="pi pi-github mr-3" style="font-size: 1.5rem;"></i></a>
-        <button pButton label="Login" class="mr-3"></button>
+        <!-- <a href="#"> <i class="pi pi-instagram mr-3" style="font-size: 1.5rem;"></i></a>
+        <a href="#"> <i class="pi pi-facebook mr-3" style="font-size: 1.5rem;"></i></a> -->
+        <a href="https://www.linkedin.com/in/emanuel-capo" target="_blank"> <i class="pi pi-linkedin mr-3" style="font-size: 1.5rem;"></i></a>
+        <a href="https://github.com/Emanuel-Capo" target="_blank"> <i class="pi pi-github mr-3" style="font-size: 1.5rem;"></i></a>
+        <button pButton label="Login" class="mr-3" data-bs-toggle="modal" data-bs-target="#login" *ngIf="!validado()"></button>
+        <button pButton label="Salir" class="mr-3" (click)="salir()" *ngIf="validado()"></button>
     </ng-template>
 </p-menubar>
+
+<div class="modal fade" id="login" tabindex="-1" aria-hidden="true">
+    <app-login></app-login>
+</div>

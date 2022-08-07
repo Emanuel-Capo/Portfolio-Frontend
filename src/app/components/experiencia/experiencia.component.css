@@ -15,14 +15,7 @@ body {
     padding: 20px 50px;
     list-style: none;
     text-align: left;
-    max-width: 70%;
-}
-
-@media (max-width: 767px) {
-    .timeline {
-        max-width: 98%;
-        padding: 25px;
-    }
+    width: 85%;
 }
 
 .timeline h1 {
@@ -42,12 +35,6 @@ body {
     padding-bottom: 25px;
     margin-bottom: 25px;
     position: relative;
-}
-
-@media (max-width: 767px) {
-    .timeline .event {
-        padding-top: 30px;
-    }
 }
 
 .timeline .event:last-of-type {
@@ -72,13 +59,6 @@ body {
     width: 20%;
 }
 
-@media (max-width: 767px) {
-    .timeline .event:before {
-        left: 0px;
-        text-align: left;
-    }
-}
-
 .timeline .event:after {
     -webkit-box-shadow: 0 0 0 3px #727cf5;
     box-shadow: 0 0 0 3px #727cf5;
@@ -89,12 +69,6 @@ body {
     width: 9px;
     content: "";
     top: 5px;
-}
-
-@media (max-width: 767px) {
-    .timeline .event:after {
-        left: -31.8px;
-    }
 }
 
 .rtl .timeline {
@@ -124,4 +98,19 @@ body {
 
 a {
     cursor: pointer;
+}
+
+#experiencia::before {
+    content: "";
+    display: block;
+    height: 100px;
+    margin: -100px 0 0;
+}
+
+.fecha {
+    font-size: small;
+}
+
+img {
+    height: 80px;
 }

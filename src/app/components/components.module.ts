@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 import { HeaderComponent } from './header/header.component';
 import { AcercaComponent } from './acerca/acerca.component';
@@ -15,14 +16,7 @@ import { EducacionComponent } from './educacion/educacion.component';
 import { HabilidadesComponent } from './habilidades/habilidades.component';
 import { MenuComponent } from './menu/menu.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
-import { AgregarExpComponent } from './experiencia/agregar/agregar.component';
-import { EditarExpComponent } from './experiencia/editar/editar.component';
-import { AgregarEduComponent } from './educacion/agregar/agregar.component';
-import { EditarEduComponent } from './educacion/editar/editar.component';
-import { AgregarHabComponent } from './habilidades/agregar-hab/agregar-hab.component';
-import { EditarHabComponent } from './habilidades/editar-hab/editar-hab.component';
-import { EditarProyComponent } from './proyectos/editar-proy/editar-proy.component';
-import { AgregarProyComponent } from './proyectos/agregar-proy/agregar-proy.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -35,14 +29,7 @@ import { AgregarProyComponent } from './proyectos/agregar-proy/agregar-proy.comp
     HeaderComponent,
     MenuComponent,
     ProyectosComponent,
-    AgregarExpComponent,
-    EditarExpComponent,
-    AgregarEduComponent,
-    EditarEduComponent,
-    AgregarHabComponent,
-    EditarHabComponent,
-    EditarProyComponent,
-    AgregarProyComponent,
+    LoginComponent,
   ],
   imports: [
     CommonModule,
@@ -50,9 +37,10 @@ import { AgregarProyComponent } from './proyectos/agregar-proy/agregar-proy.comp
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
-HttpClientModule,
-ReactiveFormsModule,
-SweetAlert2Module
+    HttpClientModule,
+    ReactiveFormsModule,
+    SweetAlert2Module,
+    ProgressSpinnerModule
   ],
   exports:[
     AcercaComponent,

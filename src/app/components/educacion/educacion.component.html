@@ -1,32 +1,69 @@
-<div class="text-b mr-6 ml-6" id="educacion">
-    <h2 class="text-4xl text-center text-900">Educación <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarEdu">Agregar</button></h2>
-    <div class="accordion acc" id="accordionExample">
+<div class="text-b mx-auto w-75 " id="educacion">
+    <h2 class="text-4xl text-center text-900 m-4">Educación <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#Edu" *ngIf="validado()" (click)="addMode()"><i class="bi bi-file-earmark-plus"></i> Agregar</button></h2>
+    <div class="text-center">
+        <p-progressSpinner *ngIf="!dataOK"></p-progressSpinner>
+    </div>
+    <div class="accordion acc" id="accordionExample" *ngIf="dataOK">
         <div class="accordion-item" *ngFor="let edu of educaciones; let i=index">
             <div class="accordion-header " [attr.id]="'heading'+i">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i">
+                <button class="accordion-button boton" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i">
+                    <div class="d-flex justify-content-between">
                 <h4>{{edu.titulo}}</h4>
                 <div>
-                    <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#editarEdu" (click)="educacionActual(edu)">Editar</button>
-                <button class="btn btn-danger" (click)="eliminarEducacion(edu.id!)">Eliminar</button>
+                    <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#Edu" (click)="educacionActual(edu)" *ngIf="validado()"><i class="bi bi-pencil"></i> Editar</button>
+                <button class="btn btn-danger" (click)="eliminarEducacion(edu.id!)" *ngIf="validado()"><i class="bi bi-trash3"></i> Eliminar</button>
+                <i class="bi bi-chevron-down ml-4" style="font-size: 1.5rem;"></i>
             </div>
-            </button>
         </div>
-        <div [attr.id]="'collapse'+i" class="accordion-collapse collapse" [ngClass]="{'show': i===0}" [attr.aria-labelledby]="'heading'+i" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-
-                <h6>Cursado en: {{edu.academia}}</h6>
-                <h6>Finalizado: {{edu.fecha_fin|date:'dd/MM/yyyy'}}</h6>
-
+        </button>
+    </div>
+    <div [attr.id]="'collapse'+i" class="accordion-collapse collapse" [ngClass]="{'show': i===0}" [attr.aria-labelledby]="'heading'+i" data-bs-parent="#accordionExample">
+        <div class="accordion-body py-2">
+            <div class="row">
+                <div class="col-6 sm:col-4 md:col-2 ">
+                    <img src={{edu.img}} class="d-flex m-auto" alt="...">
+                </div>
+                <div class="col">
+                    <h6>Cursado en: {{edu.academia}}</h6>
+                    <h6>Finalizado: {{edu.fecha_fin|date:'dd/MM/yyyy'}}</h6>
+                </div>
             </div>
         </div>
     </div>
 </div>
 </div>
-
-<div class="modal fade" id="agregarEdu" tabindex="-1" aria-hidden="true">
-    <app-agregar-edu (onEducacion)="agregarEducacion($event)"></app-agregar-edu>
 </div>
 
-<div class="modal fade" id="editarEdu" tabindex="-1" aria-hidden="true">
-    <app-editar-edu [educacion]="eduActual" (onEditado)="editarEducacion(eduActual.id!, $event)"></app-editar-edu>
+<div class="modal fade" id="Edu" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" *ngIf="!editMode">Agregar Educación</h5>
+                <h5 class="modal-title" id="exampleModalLabel" *ngIf="editMode">Editar Educación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="miFormulario" (ngSubmit)="guardar()">
+                    <div class="mb-3">
+                        <label class="form-label">Titulo</label>
+                        <input type="text" class="form-control" formControlName="titulo">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Academia</label>
+                        <input type="text" class="form-control" formControlName="academia">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Fecha final</label>
+                        <input type="date" class="form-control" formControlName="fecha_fin">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Link imágen</label>
+                        <input type="text" class="form-control" formControlName="img">
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Edu" *ngIf="!editMode">Agregar</button>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Edu" *ngIf="editMode">Editar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

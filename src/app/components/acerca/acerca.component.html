@@ -1,10 +1,36 @@
-<div class="text-b mx-6 my-2 grid" id="acerca">
+<div class="text-b mx-6 my-2 grid">
     <div class="col-3 h-12rem ">
-        <img src="./assets/no-image.png" class="m-3 -mt-8 max-h-full max-w-full border-circle">
+        <img [src]=persona.img class="m-3 -mt-8 max-h-full max-w-full border-circle border border-secondary border-4">
     </div>
     <div class="col-9">
-        <h2 class="text-4xl text-900">Acerca de</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, quaerat reiciendis. Vitae, blanditiis pariatur, aliquid voluptatum magnam inventore repellendus mollitia explicabo voluptates doloribus corrupti distinctio nihil officiis dolores
-            impedit enim? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo omnis voluptatem adipisci ab ut sit iure quas, eius expedita numquam earum quasi sapiente facilis fuga? Accusamus et minus reprehenderit reiciendis!</p>
+        <h2 class="text-4xl text-900" id="acerca">Acerca de <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#Per" (click)="form()" *ngIf="validado()"><i class="bi bi-pencil"></i> Editar</button></h2>
+        <div class="text-center col-8">
+            <p-progressSpinner *ngIf="!dataOK"></p-progressSpinner>
+        </div>
+        <p *ngIf="dataOK">{{persona.acerca}}</p>
+    </div>
+</div>
+
+<div class="modal fade" id="Per" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar datos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="miFormulario" (ngSubmit)="editar()">
+                    <div class="mb-3">
+                        <label class="form-label">Acerca de:</label>
+                        <textarea cols="30" rows="10" class="form-control" formControlName="acerca"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Link imagen:</label>
+                        <input type="text" class="form-control" formControlName="img">
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Per">Editar</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>

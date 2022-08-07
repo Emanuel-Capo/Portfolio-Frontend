@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Habilidades } from './habilidades';
 
@@ -10,6 +10,8 @@ export class HabilidadesService {
 
   private baseURL="http://localhost:8080/api/habilidades"
 
+  header:HttpHeaders=new HttpHeaders({'Authorization':JSON.parse(sessionStorage.getItem('token')||'{}').token})
+
   constructor(private HttpClient: HttpClient) { }
 
   obtenerHabilidades():Observable<Habilidades[]>{
@@ -17,14 +19,14 @@ export class HabilidadesService {
   }
 
   agregarHabilidades(habilidades:Habilidades):Observable<Object>{
-    return this.HttpClient.post(`${this.baseURL}/crear`,habilidades)
+    return this.HttpClient.post(`${this.baseURL}/crear`,habilidades,{headers:this.header})
   }
 
   borrarHabilidades(id:number):Observable<Object>{
-    return this.HttpClient.delete(`${this.baseURL}/borrar/${id}`)
+    return this.HttpClient.delete(`${this.baseURL}/borrar/${id}`,{headers:this.header})
   }
 
   editarHabilidades(id:number,habilidades:Habilidades):Observable<Object>{
-    return this.HttpClient.put(`${this.baseURL}/modificar/${id}`,habilidades)
+    return this.HttpClient.put(`${this.baseURL}/modificar/${id}`,habilidades,{headers:this.header})
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/api';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-menu',
@@ -41,4 +42,16 @@ export class MenuComponent implements OnInit {
     ];
 }
 
+
+salir(){
+    sessionStorage.clear()
+    Swal.fire({
+      title: 'Saliste del modo Edición',
+      icon:'success'
+    })
+  }
+
+  validado():boolean{
+    return (sessionStorage.getItem('token')!==null)
+  }
 }

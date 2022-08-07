@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Proyecto } from './proyectos';
 import { ProyectosService } from './proyectos.service';
 import Swal from 'sweetalert2'
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-proyectos',
@@ -24,25 +25,37 @@ export class ProyectosComponent implements OnInit {
     link:"",
     img:"assets/tetris.jpg"
 }];
-  proyecto!:Proyecto;
+  proyecto:Proyecto={
+    nombre:'',
+    descripcion:'',
+    link:'',
+    img:''
+  };
   proyActual!:Proyecto;
 
-  proyectoActual(proy:Proyecto){
-    this.proyActual=proy
-  }
+  miFormulario:FormGroup=this.fb.group({
+    nombre:'',
+    descripcion:'',
+    link:'',
+    img:''
+  })
 
-  constructor(private ProyectoService:ProyectosService){}
+  editMode:boolean=true
+  dataOK:boolean=false
+  
+  constructor(private ProyectoService:ProyectosService,
+    private fb:FormBuilder){}
   
   ngOnInit() {
       this.obtenerProyectos()            
     }
 
     obtenerProyectos(){
-      this.ProyectoService.obtenerProyectos().subscribe(data=>(this.proyectos=data))
+      this.ProyectoService.obtenerProyectos().subscribe(data=>{
+        this.proyectos=data
+        this.dataOK=true})
     }    
    
-
-
    agregarProyecto(data:Proyecto){
       this.ProyectoService.agregarProyectos(data).subscribe({
         next:(r)=>(Swal.fire({
@@ -52,9 +65,7 @@ export class ProyectosComponent implements OnInit {
       error:(e)=>{Swal.fire({
         title: 'No se pudo agregar',
         icon:'error'
-    })}})
-   
-   
+    })}})  
     }
 
     eliminarProyecto(id:number){
@@ -73,4 +84,41 @@ export class ProyectosComponent implements OnInit {
     }).then((r)=> window.location.reload()))
     }
 
-}
+    validado():boolean{
+      return (sessionStorage.getItem('token')!==null)
+    }
+
+    reset(){
+      this.miFormulario.reset()
+    }
+
+    proyectoActual(proy:Proyecto){
+      this.editMode=true
+      this.proyActual=proy
+      this.miFormulario.reset({
+        nombre:this.proyActual.nombre,
+        descripcion:this.proyActual.descripcion,
+        link:this.proyActual.link,
+        img:this.proyActual.img
+      })
+    }
+
+    save(){
+      this.proyecto.nombre=this.miFormulario.value.nombre
+      this.proyecto.descripcion=this.miFormulario.value.descripcion
+      this.proyecto.link=this.miFormulario.value.link
+      this.proyecto.img=this.miFormulario.value.img
+    }
+
+    guardar(){
+      this.save()
+      if(this.editMode) {this.editarProyecto(this.proyActual.id!,this.proyecto)}
+      else {this.agregarProyecto(this.proyecto)}
+    }
+
+    addMode(){
+      this.miFormulario.reset()
+      this.editMode=false
+    }
+  }
+  

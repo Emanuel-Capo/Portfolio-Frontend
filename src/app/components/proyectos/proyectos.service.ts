@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Proyecto } from './proyectos';
 
@@ -10,6 +10,8 @@ export class ProyectosService {
 
   private baseURL="http://localhost:8080/api/proyectos"
 
+  header:HttpHeaders=new HttpHeaders({'Authorization':JSON.parse(sessionStorage.getItem('token')||'{}').token})
+
   constructor(private HttpClient: HttpClient) { }
 
   obtenerProyectos():Observable<Proyecto[]>{
@@ -17,14 +19,14 @@ export class ProyectosService {
   }
 
   agregarProyectos(proyecto:Proyecto):Observable<Object>{
-    return this.HttpClient.post(`${this.baseURL}/crear`,proyecto)
+    return this.HttpClient.post(`${this.baseURL}/crear`,proyecto,{headers:this.header})
   }
 
   borrarProyectos(id:number):Observable<Object>{
-    return this.HttpClient.delete(`${this.baseURL}/borrar/${id}`)
+    return this.HttpClient.delete(`${this.baseURL}/borrar/${id}`,{headers:this.header})
   }
 
   editarProyectos(id:number,proyecto:Proyecto):Observable<Object>{
-    return this.HttpClient.put(`${this.baseURL}/modificar/${id}`,proyecto)
+    return this.HttpClient.put(`${this.baseURL}/modificar/${id}`,proyecto,{headers:this.header})
   }
 }

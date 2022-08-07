@@ -2,6 +2,7 @@ import { Component} from '@angular/core';
 import { Habilidades } from './habilidades';
 import { HabilidadesService } from './habilidades.service';
 import Swal from 'sweetalert2'
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-habilidades',
@@ -27,25 +28,38 @@ export class HabilidadesComponent{
     }
   ]
 
-  habilidad!:Habilidades;
+  habilidad:Habilidades={
+      habilidad:'',
+      porcentaje:0,
+      iconVB:'',
+      iconPath:''
+  };
   habilActual!:Habilidades;
 
-  habilidadActual(hab:Habilidades){
-    this.habilActual=hab
-  }
+  miFormulario:FormGroup=this.fb.group({
+      habilidad:'',
+      porcentaje:0,
+      iconVB:'',
+      iconPath:''
+  })  
 
-  constructor(private habilidadService:HabilidadesService){}
+  editMode:boolean=true
+  dataOK:boolean=false
+  
+  constructor(private habilidadService:HabilidadesService,
+    private fb:FormBuilder){}
   
   ngOnInit() {
       this.obtenerHabilidadess()            
     }
 
     obtenerHabilidadess(){
-      this.habilidadService.obtenerHabilidades().subscribe(data=>(this.habilidades=data))
+      this.habilidadService.obtenerHabilidades().subscribe(data=>{
+        this.habilidades=data
+      this.dataOK=true
+    })
     }    
    
-
-
    agregarHabilidades(data:Habilidades){
       this.habilidadService.agregarHabilidades(data).subscribe({
         next:(r)=>(Swal.fire({
@@ -55,9 +69,7 @@ export class HabilidadesComponent{
       error:(e)=>{Swal.fire({
         title: 'No se pudo agregar',
         icon:'error'
-    })}})
-   
-   
+    })}})  
     }
 
     eliminarHabilidades(id:number){
@@ -74,6 +86,48 @@ export class HabilidadesComponent{
         title: 'Editado con éxito',
         icon:'success'
     }).then((r)=> window.location.reload()))
+    }
+
+    validado():boolean{
+      return (sessionStorage.getItem('token')!==null)
+    }
+
+    reset(){
+      this.miFormulario.reset()
+    }
+
+    habilidadActual(hab:Habilidades){
+      this.editMode=true
+      this.habilActual=hab
+      this.miFormulario.reset({
+        habilidad:this.habilActual.habilidad,
+        porcentaje:this.habilActual.porcentaje,
+        iconVB:this.habilActual.iconVB,
+        iconPath:this.habilActual.iconPath
+      })
+    } 
+
+    save(){
+      this.habilidad.habilidad=this.miFormulario.value.habilidad
+      this.habilidad.porcentaje=this.miFormulario.value.porcentaje
+      this.habilidad.iconVB=this.miFormulario.value.iconVB
+      this.habilidad.iconPath=this.miFormulario.value.iconPath
+    }
+
+    guardar(){
+      this.save()
+      if(this.editMode){this.editarHabilidades(this.habilActual.id!,this.habilidad)}
+      else {this.agregarHabilidades(this.habilidad)}
+    }
+
+    editar(){
+      this.save()
+      this.editarHabilidades(this.habilActual.id!,this.habilidad)
+    }
+
+    addMode(){
+      this.miFormulario.reset()
+      this.editMode=false
     }
 }
 

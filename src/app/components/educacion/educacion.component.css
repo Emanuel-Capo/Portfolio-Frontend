@@ -9,3 +9,20 @@
     --bs-accordion-btn-focus-border-color: none;
     --bs-accordion-btn-focus-box-shadow: none;
 }
+
+#educacion::before {
+    content: "";
+    display: block;
+    height: 100px;
+    margin: -100px 0 0;
+}
+
+img {
+    height: 60px;
+}
+
+.boton {
+    display: block;
+    width: 100%;
+    padding: 20px;
+}

@@ -1,40 +1,77 @@
 <div class="container text-b" id="experiencia">
-    <h2 class="text-4xl text-center text-900">Experiencia
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarExp">Agregar</button></h2>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card no-bg">
-                <div class="card-body">
-                    <div id="content">
-                        <ul class="timeline">
-                            <li class="event" *ngFor="let exper of experiencias" attr.data="Desde:{{exper.fecha_inicio|date:'dd/MM/yyyy'}} Hasta:{{exper.fecha_fin|date:'dd/MM/yyyy'}}">
+    <h2 class="text-4xl text-center text-900 m-4">Experiencia
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#Exp" *ngIf="validado()" (click)="addMode()"><i class="bi bi-file-earmark-plus"></i> Agregar</button></h2>
+    <div class="text-center">
+        <p-progressSpinner *ngIf="!dataOK"></p-progressSpinner>
+    </div>
+    <ul class="timeline" *ngIf="dataOK">
+        <li class="event" *ngFor="let exper of experiencias">
 
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h3>Empresa: {{exper.empresa}}</h3>
-                                        <h3>Trabajo: {{exper.trabajo}}</h3>
-                                    </div>
+            <div class="row">
+                <div class="col-6 sm:col-4 lg:col-2 ">
+                    <img src={{exper.img}} class="img-fluid rounded" alt="...">
+                </div>
+                <div class="col">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h3>Empresa: {{exper.empresa}}</h3>
+                            <h3>Trabajo: {{exper.trabajo}}</h3>
+                            <p class="fecha"><span *ngIf="exper.fecha_inicio!=null">Desde: {{exper.fecha_inicio|date:'dd/MM/yyyy'}}<span *ngIf="exper.fecha_fin!=null">, Hasta: {{exper.fecha_fin|date:'dd/MM/yyyy'}}</span></span>
+                            </p>
+                        </div>
 
-                                    <div>
-                                        <button class="btn btn-primary mx-2" (click)="experienciaActual(exper)" data-bs-toggle="modal" data-bs-target="#editarExp">Editar</button>
-                                        <button class="btn btn-danger" (click)="eliminarExperiencia(exper.id!)">Eliminar</button>
-                                    </div>
-                                </div>
-                                <p>{{exper.descripcion}}</p>
-                            </li>
-
-                        </ul>
+                        <div>
+                            <button class="btn btn-primary mx-2" (click)="experienciaActual(exper)" data-bs-toggle="modal" data-bs-target="#Exp" *ngIf="validado()"><i class="bi bi-pencil"></i> Editar</button>
+                            <button class="btn btn-danger" (click)="eliminarExperiencia(exper.id!)" *ngIf="validado()"><i class="bi bi-trash3"></i> Eliminar</button>
+                        </div>
                     </div>
                 </div>
             </div>
+            <p>{{exper.descripcion}}</p>
+        </li>
+
+    </ul>
+
+</div>
+
+<div class="modal fade" id="Exp" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" *ngIf="!editMode">Agregar Experiencia</h5>
+                <h5 class="modal-title" id="exampleModalLabel" *ngIf="editMode">Editar Experiencia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="miFormulario" (ngSubmit)="guardar()">
+                    <div class="mb-3">
+                        <label class="form-label">Trabajo</label>
+                        <input type="text" class="form-control" formControlName="trabajo">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Empresa</label>
+                        <input type="text" class="form-control" formControlName="empresa">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Fecha de inicio</label>
+                        <input type="date" class="form-control" formControlName="fecha_inicio">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Fecha final</label>
+                        <input type="date" class="form-control" formControlName="fecha_fin">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Link de imagen</label>
+                        <input type="text" class="form-control" formControlName="img">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Breve descripción</label>
+                        <textarea class="form-control" cols="30" rows="5" formControlName="descripcion"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Exp" *ngIf="!editMode">Agregar</button>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Exp" *ngIf="editMode">Editar</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-
-<div class="modal fade" id="agregarExp" tabindex="-1" aria-hidden="true">
-    <app-agregar-exp (onExperiencia)="agregarExperiencia($event)"></app-agregar-exp>
-</div>
-
-<div class="modal fade" id="editarExp" tabindex="-1" aria-hidden="true">
-    <app-editar-exp [experiencia]="experActual" (onEditado)="editarExperiencia(experActual.id!, $event)"></app-editar-exp>
 </div>

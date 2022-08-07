@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Educacion } from './educacion';
 import { EducacionService } from './educacion.service';
 import Swal from 'sweetalert2'
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-educacion',
@@ -15,27 +16,40 @@ export class EducacionComponent implements OnInit {
     id:0,
     titulo:"Programador Fullstack",
     academia:"Argentina Programa",
-    fecha_fin:"2022-09-30"
+    fecha_fin:"2022-09-30",
+    img:"assets/APLogo-20-20.png"
   }];
-  educacion!:Educacion;
-  eduActual!:Educacion;
+  educacion:Educacion={
+    titulo     :'',
+    academia   :'',
+    fecha_fin  :'',
+    img        :''
+  };
+  eduActual!:Educacion;  
 
-  educacionActual(edu:Educacion){
-    this.eduActual=edu
-    console.log(this.eduActual)
-  }
+  miFormulario:FormGroup = this.fb.group({
+    titulo     :'',
+    academia   :'',
+    fecha_fin  :'',
+    img        :''
+  })    
 
-  constructor(private educacionService:EducacionService){}
+  editMode:boolean=true
+  dataOK:boolean=false
+
+  constructor(private educacionService:EducacionService,
+              private fb:FormBuilder){} 
   
   ngOnInit() {
       this.obtenerEducaciones()            
     }
 
     obtenerEducaciones(){
-      this.educacionService.obtenerEducacion().subscribe(data=>(this.educaciones=data))
+      this.educacionService.obtenerEducacion().subscribe(data=>{
+        (this.educaciones=data)
+        this.dataOK=true
+      })
     }    
-   
-
 
    agregarEducacion(data:Educacion){
       this.educacionService.agregarEducacion(data).subscribe({
@@ -46,9 +60,7 @@ export class EducacionComponent implements OnInit {
       error:(e)=>{Swal.fire({
         title: 'No se pudo agregar',
         icon:'error'
-    })}})
-   
-   
+    })}})      
     }
 
     eliminarEducacion(id:number){
@@ -67,4 +79,40 @@ export class EducacionComponent implements OnInit {
     }).then((r)=> window.location.reload()))
     }
 
+
+
+    validado():boolean{
+      return (sessionStorage.getItem('token')!==null)
+    }
+
+   
+
+    educacionActual(edu:Educacion){
+      this.editMode=true
+      this.eduActual=edu
+      this.miFormulario.reset({
+        titulo: this.eduActual.titulo,
+        academia: this.eduActual.academia,
+        fecha_fin:this.eduActual.fecha_fin,
+        img:this.eduActual.img
+      })
+    }   
+     
+    save(){
+      this.educacion.titulo=this.miFormulario.value.titulo
+      this.educacion.academia=this.miFormulario.value.academia
+      this.educacion.fecha_fin=this.miFormulario.value.fecha_fin
+      this.educacion.img=this.miFormulario.value.img
+    }
+
+    guardar(){
+      this.save()
+      if (this.editMode) this.editarEducacion(this.eduActual.id!,this.educacion)
+      else (this.agregarEducacion(this.educacion))
+    }
+
+    addMode(){
+      this.miFormulario.reset()
+      this.editMode=false
+    }
 }

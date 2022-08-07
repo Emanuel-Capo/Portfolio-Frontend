@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Experiencia } from './experiencia';
 
@@ -10,6 +10,8 @@ export class ExperienciaService {
 
   private baseURL="http://localhost:8080/api/experiencia"
 
+  header:HttpHeaders=new HttpHeaders({'Authorization':JSON.parse(sessionStorage.getItem('token')||'{}').token})
+
   constructor(private HttpClient: HttpClient) { }
 
   obtenerExperiencia():Observable<Experiencia[]>{
@@ -17,14 +19,14 @@ export class ExperienciaService {
   }
 
   agregarExperiencia(experiencia:Experiencia):Observable<Object>{
-    return this.HttpClient.post(`${this.baseURL}/crear`,experiencia)
+    return this.HttpClient.post(`${this.baseURL}/crear`,experiencia,{headers:this.header})
   }
 
   borrarExperiencia(id:number):Observable<Object>{
-    return this.HttpClient.delete(`${this.baseURL}/borrar/${id}`)
+    return this.HttpClient.delete(`${this.baseURL}/borrar/${id}`,{headers:this.header})
   }
 
   editarExperiencia(id:number,experiencia:Experiencia):Observable<Object>{
-    return this.HttpClient.put(`${this.baseURL}/modificar/${id}`,experiencia)
+    return this.HttpClient.put(`${this.baseURL}/modificar/${id}`,experiencia,{headers:this.header})
   }
-}
+} 
