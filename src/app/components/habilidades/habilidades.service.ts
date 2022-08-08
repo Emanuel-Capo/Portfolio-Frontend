@@ -8,7 +8,7 @@ import { Habilidades } from './habilidades';
 })
 export class HabilidadesService {
 
-  private baseURL="http://localhost:8080/api/habilidades"
+  private baseURL="https://portfolio-ema.herokuapp.com/api/habilidades"
 
   header:HttpHeaders=new HttpHeaders({'Authorization':JSON.parse(sessionStorage.getItem('token')||'{}').token})
 

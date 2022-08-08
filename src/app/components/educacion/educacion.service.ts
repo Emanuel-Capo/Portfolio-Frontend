@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class EducacionService {
 
-  private baseURL="http://localhost:8080/api/educacion"
+  private baseURL="https://portfolio-ema.herokuapp.com/api/educacion"
 
   header:HttpHeaders=new HttpHeaders({'Authorization':JSON.parse(sessionStorage.getItem('token')||'{}').token})
 
