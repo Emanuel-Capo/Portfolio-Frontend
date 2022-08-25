@@ -54,4 +54,5 @@ salir(){
   validado():boolean{
     return (sessionStorage.getItem('token')!==null)
   }
+  
 }

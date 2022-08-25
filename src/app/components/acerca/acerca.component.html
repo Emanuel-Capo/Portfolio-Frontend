@@ -1,13 +1,13 @@
 <div class="text-b mx-6 my-2 grid">
-    <div class="col-3 h-12rem ">
+    <div class="col-12 sm:col-3 h-12rem ">
         <img [src]=persona.img class="m-3 -mt-8 max-h-full max-w-full border-circle border border-secondary border-4">
     </div>
-    <div class="col-9">
-        <h2 class="text-4xl text-900" id="acerca">Acerca de <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#Per" (click)="form()" *ngIf="validado()"><i class="bi bi-pencil"></i> Editar</button></h2>
+    <div class=" sm:col-9 -mt-8 sm:mt-0">
+        <h2 class="text-4xl text-900" id="acerca">Acerca de mi<button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#Per" (click)="form()" *ngIf="validado()"><i class="bi bi-pencil"></i> Editar</button></h2>
         <div class="text-center col-8">
             <p-progressSpinner *ngIf="!dataOK"></p-progressSpinner>
         </div>
-        <p *ngIf="dataOK">{{persona.acerca}}</p>
+        <p *ngIf="dataOK" class="fs-5">{{persona.acerca}}</p>
     </div>
 </div>
 

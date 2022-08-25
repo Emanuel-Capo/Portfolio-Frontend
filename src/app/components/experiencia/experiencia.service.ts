@@ -16,7 +16,7 @@ export class ExperienciaService {
 
   obtenerExperiencia():Observable<Experiencia[]>{
     return this.HttpClient.get<Experiencia[]>(`${this.baseURL}/ver`)
-  }
+  } 
 
   agregarExperiencia(experiencia:Experiencia):Observable<Object>{
     return this.HttpClient.post(`${this.baseURL}/crear`,experiencia,{headers:this.header})

@@ -6,10 +6,10 @@
     <div *ngIf="dataOK">
         <div class="card mb-3" *ngFor="let proyecto of proyectos">
             <div class="row g-0">
-                <div class="col-md-3">
+                <div class="col-3 d-none d-md-block">
                     <img src={{proyecto.img}} class="img-fluid rounded-start" alt="...">
                 </div>
-                <div class="col-md-9">
+                <div class="col">
                     <div class="card-body">
                         <h5 class="card-title">{{proyecto.nombre}}
                             <a href={{proyecto.link}}>
@@ -42,7 +42,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Descripcion del proyecto</label>
-                        <input type="text" class="form-control" formControlName="descripcion">
+                        <textarea class="form-control" formControlName="descripcion" cols="30" rows="5"></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Imagen referencial</label>
