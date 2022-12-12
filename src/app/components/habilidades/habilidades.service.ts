@@ -8,7 +8,8 @@ import { Habilidades } from './habilidades';
 })
 export class HabilidadesService {
 
-  private baseURL="https://portfolio-ema.herokuapp.com/api/habilidades"
+  // private baseURL="https://portfolio-ema.herokuapp.com/api/habilidades"
+  private baseURL="https://portfolio-backend-production-0d9f.up.railway.app/api/habilidades"
 
   header:HttpHeaders=new HttpHeaders({'Authorization':JSON.parse(sessionStorage.getItem('token')||'{}').token})
 

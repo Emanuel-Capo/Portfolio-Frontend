@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class PersonaServiceService {
 
-  private baseURL="https://portfolio-ema.herokuapp.com/api/persona"
+  // private baseURL="https://portfolio-ema.herokuapp.com/api/persona"
+  private baseURL="https://portfolio-backend-production-0d9f.up.railway.app/api/persona"
 
   header:HttpHeaders=new HttpHeaders({'Authorization':JSON.parse(sessionStorage.getItem('token')||'{}').token})
 
